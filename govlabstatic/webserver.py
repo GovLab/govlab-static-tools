@@ -4,6 +4,7 @@ import socket
 import SimpleHTTPServer
 import SocketServer
 import posixpath
+import threading
 
 from colorama import Style
 
@@ -41,7 +42,7 @@ class MySimpleHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         return path
 
 
-def run_server(root_dir, port):
+def run(root_dir, port):
     Handler = MySimpleHTTPRequestHandler
     Handler.root_dir = root_dir
 
@@ -51,3 +52,12 @@ def run_server(root_dir, port):
           ("Starting HTTP server at port %d." % port) + \
           Style.RESET_ALL
     httpd.serve_forever()
+
+
+def start(root_dir, port=7000):
+    thread = threading.Thread(target=run, kwargs=dict(
+        root_dir=root_dir,
+        port=port
+    ))
+    thread.daemon = True
+    thread.start()

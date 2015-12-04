@@ -9,6 +9,7 @@ setup(name='govlab-static-tools',
       license='MIT',
       install_requires=[
           'colorama',
+          'staticjinja',
       ],
       packages=['govlabstatic'],
       zip_safe=False)
