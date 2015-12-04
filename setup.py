@@ -11,5 +11,5 @@ setup(name='govlab-static-tools',
           'colorama',
           'staticjinja',
       ],
-      packages=['govlabstatic'],
+      packages=['govlabstatic', 'govlabstatic.script'],
       zip_safe=False)
