@@ -40,6 +40,8 @@ class GovLabManager(Manager):
 
 class WatchBuildServe(Command):
     def run(self):
+        if not os.path.exists(self.app.site['outpath']):
+            os.makedirs(self.app.site['outpath'])
         sass.start_watch(src_path=self.app.sass_src_path,
                          dest_path=self.app.sass_dest_path)
         webserver.start(root_dir=self.app.site['outpath'])
