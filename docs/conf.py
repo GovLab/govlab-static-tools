@@ -53,8 +53,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'govlab-static-tools'
-copyright = u'2015, Atul Varma'
-author = u'Atul Varma'
+copyright = u'2015, GovLab'
+author = u'GovLab'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -229,7 +229,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, 'govlab-static-tools.tex', u'govlab-static-tools Documentation',
-   u'Atul Varma', 'manual'),
+   u'GovLab', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
