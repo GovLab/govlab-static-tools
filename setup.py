@@ -10,6 +10,7 @@ setup(name='govlab-static-tools',
       install_requires=[
           'colorama',
           'staticjinja',
+          'argh',
       ],
-      packages=['govlabstatic', 'govlabstatic.script'],
+      packages=['govlabstatic'],
       zip_safe=False)
