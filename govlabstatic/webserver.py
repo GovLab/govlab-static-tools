@@ -54,7 +54,7 @@ def run(root_dir, port):
     httpd.serve_forever()
 
 
-def start(root_dir, port=7000):
+def start(root_dir, port):
     thread = threading.Thread(target=run, kwargs=dict(
         root_dir=root_dir,
         port=port

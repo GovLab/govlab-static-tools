@@ -1,8 +1,8 @@
 import os
 
-from govlabstatic.cli import GovLabManager
+from govlabstatic.cli import Manager
 
-manager = GovLabManager(
+manager = Manager(
     site_name='example site',
     site={
         'outpath': 'site',

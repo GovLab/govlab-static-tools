@@ -1,14 +1,13 @@
 import sys
 import os
 import argparse
+import inspect
 
+import argh
 import colorama
-
 import staticjinja
 
 from . import sass, webserver
-from .script.manager import Manager, App
-from .script.commands import Command
 
 def init_colors():
     if sys.platform == 'win32':
@@ -17,41 +16,81 @@ def init_colors():
             del os.environ['TERM']
     colorama.init()
 
-class GovLabApp(App):
-    def __init__(self, **kwargs):
-        App.__init__(self)
-        self.__dict__.update(kwargs)
+class Manager(object):
+    '''
+    Command-line interface manager for static site generation and
+    associated tools.
+    '''
 
-class GovLabManager(Manager):
-    def __init__(self, site_name, usage=None, help=None, **kwargs):
-        app = GovLabApp(site_name=site_name, **kwargs)
-        Manager.__init__(
-            self,
-            app,
-            usage=usage,
-            help=help,
+    def __init__(self, site_name, sass_src_path, sass_dest_path,
+                 site, usage=None, help=None):
+        self.site = site
+        self.site_name = site_name
+        self.sass_src_path = sass_src_path
+        self.sass_dest_path = sass_dest_path
+        self.parser = argparse.ArgumentParser(
             description='Static site generator for %s' % site_name
         )
-        self.add_command('runserver', WatchBuildServe())
+        BuiltinCommands.add_to(self)
 
-    def run(self, commands=None, default_command=None):
-        init_colors()
-        Manager.run(self, commands, default_command)
-
-class WatchBuildServe(Command):
     def run(self):
-        if not os.path.exists(self.app.site['outpath']):
-            os.makedirs(self.app.site['outpath'])
-        sass.start_watch(src_path=self.app.sass_src_path,
-                         dest_path=self.app.sass_dest_path)
-        webserver.start(root_dir=self.app.site['outpath'])
-        staticjinja.make_site(**self.app.site).render(use_reloader=True)
+        init_colors()
+        if not os.path.exists(self.site['outpath']):
+            os.makedirs(self.site['outpath'])
+        argh.dispatch(self.parser)
+
+def is_instance_method(obj):
+    '''
+    Returns whether the given object is an instance method (and specifically
+    *not* a class method).
+    '''
+
+    return inspect.ismethod(obj) and not inspect.isclass(obj.__self__)
+
+class ManagerCommands(object):
+    '''
+    This is just a simple class that makes it easy for commands to
+    access their associated Manager instance.
+
+    Commands are defined as public instance methods of a ManagerCommands
+    subclass and can access their Manager via self.manager.
+    '''
+
+    def __init__(self, manager):
+        self.manager = manager
+
+    @classmethod
+    def add_to(cls, manager):
+        '''
+        Add all public instance methods of this class to the given Manager
+        as commands.
+        '''
+
+        commands = cls(manager)
+        argh.add_commands(manager.parser, [
+            getattr(commands, name) for name in dir(commands)
+            if not name.startswith('_')
+            and is_instance_method(getattr(commands, name))
+        ])
+
+class BuiltinCommands(ManagerCommands):
+    @argh.arg('--port', help='port to serve on')
+    def runserver(self, port=7000):
+        '''
+        Run development server.
+        '''
+
+        manager = self.manager
+        sass.start_watch(src_path=manager.sass_src_path,
+                         dest_path=manager.sass_dest_path)
+        webserver.start(root_dir=manager.site['outpath'], port=port)
+        staticjinja.make_site(**manager.site).render(use_reloader=True)
 
 def run(sass_src_path, sass_dest_path, site, name):
-    manager = GovLabManager(
+    manager = Manager(
         site_name=name,
         sass_src_path=sass_src_path,
         sass_dest_path=sass_dest_path,
         site=site
     )
-    manager.run(default_command='runserver')
+    manager.run()
