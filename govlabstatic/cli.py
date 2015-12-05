@@ -51,7 +51,8 @@ class ManagerCommands(object):
         ])
 
 class BuiltinCommands(ManagerCommands):
-    def runserver(self):
+    @argh.arg('--port', help='port to serve on')
+    def runserver(self, port=7000):
         '''
         Run development server.
         '''
@@ -59,7 +60,7 @@ class BuiltinCommands(ManagerCommands):
         manager = self.manager
         sass.start_watch(src_path=manager.sass_src_path,
                          dest_path=manager.sass_dest_path)
-        webserver.start(root_dir=manager.site['outpath'])
+        webserver.start(root_dir=manager.site['outpath'], port=port)
         staticjinja.make_site(**manager.site).render(use_reloader=True)
 
 def run(sass_src_path, sass_dest_path, site, name):
