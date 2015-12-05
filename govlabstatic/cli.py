@@ -69,5 +69,4 @@ def run(sass_src_path, sass_dest_path, site, name):
         sass_dest_path=sass_dest_path,
         site=site
     )
-    manager.parser.set_default_command('runserver')
     manager.run()
