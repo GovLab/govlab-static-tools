@@ -17,6 +17,11 @@ def init_colors():
     colorama.init()
 
 class Manager(object):
+    '''
+    Command-line interface manager for static site generation and
+    associated tools.
+    '''
+
     def __init__(self, site_name, sass_src_path, sass_dest_path,
                  site, usage=None, help=None):
         self.site = site
@@ -35,14 +40,32 @@ class Manager(object):
         argh.dispatch(self.parser)
 
 def is_instance_method(obj):
+    '''
+    Returns whether the given object is an instance method (and specifically
+    *not* a class method).
+    '''
+
     return inspect.ismethod(obj) and not inspect.isclass(obj.__self__)
 
 class ManagerCommands(object):
+    '''
+    This is just a simple class that makes it easy for commands to
+    access their associated Manager instance.
+
+    Commands are defined as public instance methods of a ManagerCommands
+    subclass and can access their Manager via self.manager.
+    '''
+
     def __init__(self, manager):
         self.manager = manager
 
     @classmethod
     def add_to(cls, manager):
+        '''
+        Add all public instance methods of this class to the given Manager
+        as commands.
+        '''
+
         commands = cls(manager)
         argh.add_commands(manager.parser, [
             getattr(commands, name) for name in dir(commands)
