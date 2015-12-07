@@ -1,0 +1,4 @@
+colorama
+staticjinja
+argh
+nose
