@@ -37,8 +37,10 @@ class Manager(object):
 
     def run(self):
         init_colors()
-        if not os.path.exists(self.site.outpath):
-            os.makedirs(self.site.outpath)
+        dirs = [self.site.outpath, os.path.dirname(self.sass_dest_path)]
+        for dirname in dirs:
+            if not os.path.exists(dirname):
+                os.makedirs(dirname)
         argh.dispatch(self.parser)
 
 def is_instance_method(obj):
