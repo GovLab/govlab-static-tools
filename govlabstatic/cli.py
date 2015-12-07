@@ -7,7 +7,7 @@ import argh
 import colorama
 import staticjinja
 
-from . import sass, webserver
+from . import sass, webserver, watcher
 
 def init_colors():
     if sys.platform == 'win32':
@@ -31,6 +31,8 @@ class Manager(object):
         self.parser = argparse.ArgumentParser(
             description='Static site generator for %s' % site_name
         )
+        self.watcher = watcher.Watcher()
+        self.watcher.add_site(site)
         BuiltinCommands.add_to(self)
 
     def run(self):
@@ -84,4 +86,5 @@ class BuiltinCommands(ManagerCommands):
         sass.start_watch(src_path=manager.sass_src_path,
                          dest_path=manager.sass_dest_path)
         webserver.start(root_dir=manager.site.outpath, port=port)
-        manager.site.render(use_reloader=True)
+        manager.site.render()
+        manager.watcher.run()
