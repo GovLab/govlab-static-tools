@@ -35,8 +35,8 @@ class Manager(object):
 
     def run(self):
         init_colors()
-        if not os.path.exists(self.site['outpath']):
-            os.makedirs(self.site['outpath'])
+        if not os.path.exists(self.site.outpath):
+            os.makedirs(self.site.outpath)
         argh.dispatch(self.parser)
 
 def is_instance_method(obj):
@@ -83,10 +83,12 @@ class BuiltinCommands(ManagerCommands):
         manager = self.manager
         sass.start_watch(src_path=manager.sass_src_path,
                          dest_path=manager.sass_dest_path)
-        webserver.start(root_dir=manager.site['outpath'], port=port)
-        staticjinja.make_site(**manager.site).render(use_reloader=True)
+        webserver.start(root_dir=manager.site.outpath, port=port)
+        manager.site.render(use_reloader=True)
 
 def run(sass_src_path, sass_dest_path, site, name):
+    if not isinstance(site, staticjinja.Site):
+        site = staticjinja.make_site(**site)
     manager = Manager(
         site_name=name,
         sass_src_path=sass_src_path,
