@@ -3,6 +3,12 @@ import subprocess
 
 from colorama import Style, Fore
 
+def compile(src_path, dest_path):
+    subprocess.check_call(' '.join([
+        'sass',
+        '%s:%s' % (src_path, dest_path)
+    ]), shell=True)
+
 def start_watch(src_path, dest_path):
     print Style.BRIGHT + "Starting SASS." + Style.RESET_ALL
 

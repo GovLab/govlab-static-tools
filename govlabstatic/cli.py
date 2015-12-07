@@ -88,3 +88,15 @@ class BuiltinCommands(ManagerCommands):
         webserver.start(root_dir=manager.site.outpath, port=port)
         manager.site.render()
         manager.watcher.run()
+
+    def build(self):
+        '''
+        Build the static site.
+        '''
+
+        print "Building SASS..."
+        sass.compile(src_path=self.manager.sass_src_path,
+                     dest_path=self.manager.sass_dest_path)
+        print "Generating site..."
+        self.manager.site.render()
+        print "Done."
