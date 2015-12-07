@@ -85,14 +85,3 @@ class BuiltinCommands(ManagerCommands):
                          dest_path=manager.sass_dest_path)
         webserver.start(root_dir=manager.site.outpath, port=port)
         manager.site.render(use_reloader=True)
-
-def run(sass_src_path, sass_dest_path, site, name):
-    if not isinstance(site, staticjinja.Site):
-        site = staticjinja.make_site(**site)
-    manager = Manager(
-        site_name=name,
-        sass_src_path=sass_src_path,
-        sass_dest_path=sass_dest_path,
-        site=site
-    )
-    manager.run()
