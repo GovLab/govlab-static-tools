@@ -102,3 +102,12 @@ class BuiltinCommands(ManagerCommands):
         print "Generating site..."
         self.manager.site.render()
         print "Done."
+
+    def test(self):
+        '''
+        Run test suite.
+        '''
+
+        print "Running smoke test."
+        self.build()
+        print "Tests pass!"
