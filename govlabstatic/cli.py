@@ -51,6 +51,8 @@ class Manager(object):
             description='Static site generator for %s' % site_name
         )
 
+        #: A :py:class:`govlabstatic.watcher.Watcher` instance used
+        #: to watch directories for changes.
         self.watcher = watcher.Watcher()
         self.watcher.add_site(site)
         BuiltinCommands.add_to(self)

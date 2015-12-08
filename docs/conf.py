@@ -295,4 +295,5 @@ intersphinx_mapping = {
     'https://docs.python.org/': None,
     'http://staticjinja.readthedocs.org/en/latest/': None,
     'http://pythonhosted.org/argh/': None,
+    'http://pythonhosted.org/watchdog/': None,
 }

@@ -13,7 +13,15 @@ class StaticjinjaReloaderEventHandler(FileSystemEventHandler):
         self.reloader.event_handler(event.event_type, event.src_path)
 
 class Watcher(object):
+    '''
+    Encapsulates the watching of directories and files and taking
+    actions when they change.
+    '''
+
     def __init__(self):
+        #: A :py:class:`watchdog.observers.api.BaseObserver` instance.
+        #: Feel free to schedule the watching of new paths and
+        #: reacting to changes in them as needed.
         self.observer = Observer()
 
     def add_site(self, site):

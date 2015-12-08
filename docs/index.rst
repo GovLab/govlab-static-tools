@@ -38,8 +38,18 @@ Developer API
    .. autoinstanceattribute:: Manager.parser
       :annotation:
 
+   .. autoinstanceattribute:: Manager.watcher
+      :annotation:
+
 .. autoclass:: BuiltinCommands
    :members:
+
+.. currentmodule:: govlabstatic.watcher
+
+.. autoclass:: Watcher
+
+   .. autoinstanceattribute:: Watcher.observer
+      :annotation:
 
 Indices and tables
 ==================
