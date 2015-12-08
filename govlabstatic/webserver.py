@@ -1,10 +1,12 @@
 import os
 import urllib
+import urllib2
 import socket
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import SocketServer
 import posixpath
 import threading
+import time
 
 from colorama import Style
 
@@ -52,6 +54,19 @@ def run(root_dir, port):
     httpd.serve_forever()
 
 
+def wait_for_server_to_be_up(port, max_attempts, attempt_interval):
+    attempts = 0
+    server_is_up = False
+    while not server_is_up:
+        try:
+            urllib2.urlopen('http://127.0.0.1:%d' % port)
+            server_is_up = True
+        except urllib2.URLError:
+            attempts += 1
+            if attempts >= max_attempts:
+                raise
+            time.sleep(attempt_interval)
+
 def start(root_dir, port):
     thread = threading.Thread(target=run, kwargs=dict(
         root_dir=root_dir,
@@ -59,3 +74,4 @@ def start(root_dir, port):
     ))
     thread.daemon = True
     thread.start()
+    wait_for_server_to_be_up(port, max_attempts=5, attempt_interval=0.25)
