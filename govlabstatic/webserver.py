@@ -42,6 +42,10 @@ def build_request_handler(root_dir):
                 path = os.path.join(path, word)
             return path
 
+        def log_message(self, format, *args):
+            # Suppress logging.
+            pass
+
     return MySimpleHTTPRequestHandler
 
 
@@ -66,6 +70,7 @@ def wait_for_server_to_be_up(port, max_attempts, attempt_interval):
             if attempts >= max_attempts:
                 raise
             time.sleep(attempt_interval)
+
 
 def start(root_dir, port):
     thread = threading.Thread(target=run, kwargs=dict(
