@@ -11,6 +11,10 @@ setup(name='govlab-static-tools',
           'colorama',
           'staticjinja',
           'argh',
+          'pylinkchecker',
+      ],
+      dependency_links=[
+          'git+git://github.com/mtlevolio/pylinkchecker.git#egg=pylinkchecker'
       ],
       packages=['govlabstatic'],
       zip_safe=False)

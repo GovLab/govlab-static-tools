@@ -7,7 +7,7 @@ import argh
 import colorama
 import staticjinja
 
-from . import sass, webserver, watcher
+from . import sass, webserver, watcher, testing
 
 def init_colors():
     if sys.platform == 'win32':
@@ -141,10 +141,13 @@ class BuiltinCommands(ManagerCommands):
         '''
         Run test suite.
 
-        Currently, this is just a smoke test that builds the site,
-        ensuring that no exceptions or SASS errors are raised.
+        Currently, this builds the site and checks links.
         '''
 
         print "Running smoke test."
         self.build()
+        print "Checking links."
+        if not testing.linkcheck_site(root_dir=self.manager.site.outpath):
+            print "Errors found while checking links, aborting."
+            sys.exit(1)
         print "Tests pass!"
