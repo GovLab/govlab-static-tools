@@ -49,9 +49,6 @@ Developer API
    .. autoinstanceattribute:: Manager.watcher
       :annotation:
 
-.. autoclass:: BuiltinCommands
-   :members:
-
 .. currentmodule:: govlabstatic.watcher
 
 .. autoclass:: Watcher
