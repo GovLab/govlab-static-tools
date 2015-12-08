@@ -23,8 +23,11 @@ class MyTCPServer(SocketServer.TCPServer):
         # and prematurely abort requests, etc.
         tb = traceback.format_exc()
         spurious_errors = [
+            # Windows
             'An established connection was aborted',
             'An existing connection was forcibly closed',
+            # Unix
+            'Broken pipe',
         ]
         for error in spurious_errors:
             if error in tb:
