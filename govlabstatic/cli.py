@@ -37,8 +37,6 @@ class Manager(object):
         to build.
     '''
 
-    __slots__ = ['parser']
-
     def __init__(self, site_name, sass_src_path, sass_dest_path,
                  site):
         self.site = site

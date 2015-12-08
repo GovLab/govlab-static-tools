@@ -33,7 +33,10 @@ Developer API
 .. currentmodule:: govlabstatic.cli
 
 .. autoclass:: Manager
-   :members:
+   :members: run
+
+   .. autoinstanceattribute:: Manager.parser
+      :annotation:
 
 .. autoclass:: BuiltinCommands
    :members:
