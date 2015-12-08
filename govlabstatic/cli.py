@@ -20,22 +20,48 @@ class Manager(object):
     '''
     Command-line interface manager for static site generation and
     associated tools.
+
+    :param site_name:
+        The name of the site, e.g. ``'GovLab Academy Website'`` or
+        ``'www.mysite.com'``.
+
+    :param sass_src_path:
+        The path to SASS source, e.g. ``'sass/styles.scss'``.
+
+    :param sass_dest_path:
+        The path to compile SASS source to, e.g.
+        ``'static/styles/styles.css'``.
+
+    :param site:
+        A :py:class:`staticjinja.Site` object representing the site
+        to build.
     '''
 
+    __slots__ = ['parser']
+
     def __init__(self, site_name, sass_src_path, sass_dest_path,
-                 site, usage=None, help=None):
+                 site):
         self.site = site
         self.site_name = site_name
         self.sass_src_path = sass_src_path
         self.sass_dest_path = sass_dest_path
+
+        #: An :py:class:`argparse.ArgumentParser` responsible for
+        #: parsing command-line arguments. Feel free to add to this
+        #: via :py:func:`argh.assembling.add_commands` to add new commands to your CLI.
         self.parser = argparse.ArgumentParser(
             description='Static site generator for %s' % site_name
         )
+
         self.watcher = watcher.Watcher()
         self.watcher.add_site(site)
         BuiltinCommands.add_to(self)
 
     def run(self):
+        '''
+        Runs the command-line interpreter.
+        '''
+
         init_colors()
         dirs = [self.site.outpath, os.path.dirname(self.sass_dest_path)]
         for dirname in dirs:
@@ -78,10 +104,18 @@ class ManagerCommands(object):
         ])
 
 class BuiltinCommands(ManagerCommands):
+    '''
+    These are built-in commands that come with any :py:class:`Manager`
+    instance.
+    '''
+
     @argh.arg('--port', help='port to serve on')
     def runserver(self, port=7000):
         '''
         Run development server.
+
+        This builds the static site, and rebuilds necessary files
+        whenever changes are detected.
         '''
 
         manager = self.manager
@@ -106,6 +140,9 @@ class BuiltinCommands(ManagerCommands):
     def test(self):
         '''
         Run test suite.
+
+        Currently, this is just a smoke test that builds the site,
+        ensuring that no exceptions or SASS errors are raised.
         '''
 
         print "Running smoke test."

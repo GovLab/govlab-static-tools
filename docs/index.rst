@@ -13,9 +13,30 @@ GovLab_.
 GovLab static sites make use of staticjinja_ and Jinja2_ for the
 generation of HTML content and SASS_ for CSS.
 
-Documentation for this package still needs to be written, but
-for now interested individuals may want to investigate the
-example_ and the source for the `GovLab website`_.
+Philosophy
+----------
+
+This package is generally intended to be used as glue that exposes
+the functionality of existing third-party libraries for core
+functionality when possible. It's also intended to provide
+testing tools out-of-the-box.
+
+Examples
+--------
+
+For examples of this package in use, see the
+`example project`_ and the source for the `GovLab website`_.
+
+Developer API
+-------------
+
+.. currentmodule:: govlabstatic.cli
+
+.. autoclass:: Manager
+   :members:
+
+.. autoclass:: BuiltinCommands
+   :members:
 
 Indices and tables
 ==================
@@ -24,7 +45,7 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. _example: https://github.com/GovLab/govlab-static-tools/tree/master/example
+.. _example project: https://github.com/GovLab/govlab-static-tools/tree/master/example
 .. _GovLab website: https://github.com/GovLab/www.thegovlab.org/
 .. _GovLab: http://thegovlab.org/
 .. _staticjinja: http://staticjinja.readthedocs.org/
