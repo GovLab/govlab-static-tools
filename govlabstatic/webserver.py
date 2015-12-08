@@ -7,15 +7,24 @@ import SocketServer
 import posixpath
 import threading
 import time
+import traceback
 
 from colorama import Style
 
-# http://stackoverflow.com/a/18858817
 class MyTCPServer(SocketServer.TCPServer):
     def server_bind(self):
+        # http://stackoverflow.com/a/18858817
         self.socket.setsockopt(socket.SOL_SOCKET,
                                socket.SO_REUSEADDR, 1)
         self.socket.bind(self.server_address)
+
+    def handle_error(self, request, client_address):
+        # Suppress spurious errors raised when we spider the site
+        # and prematurely abort requests, etc.
+        tb = traceback.format_exc()
+        if 'An existing connection was forcibly closed' in tb:
+            return
+        SocketServer.TCPServer.handle_error(self, request, client_address)
 
 
 def build_request_handler(root_dir):
