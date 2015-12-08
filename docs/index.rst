@@ -21,13 +21,17 @@ the functionality of existing third-party libraries for core
 functionality when possible. It's also intended to provide
 testing tools out-of-the-box.
 
-Examples
---------
+Example
+-------
 
 See the code for the `example project`_, which contains the
 following ``build.py`` file in its root directory:
 
 .. literalinclude:: ../example/build.py
+
+Running ``python build.py --help`` will output:
+
+.. literalinclude:: ../example/usage.txt
 
 For a more detailed example, see the source for the `GovLab website`_.
 
