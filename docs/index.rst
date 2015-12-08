@@ -24,8 +24,12 @@ testing tools out-of-the-box.
 Examples
 --------
 
-For examples of this package in use, see the
-`example project`_ and the source for the `GovLab website`_.
+See the code for the `example project`_, which contains the
+following ``build.py`` file in its root directory:
+
+.. literalinclude:: ../example/build.py
+
+For a more detailed example, see the source for the `GovLab website`_.
 
 Developer API
 -------------
