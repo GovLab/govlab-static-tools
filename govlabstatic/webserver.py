@@ -22,8 +22,13 @@ class MyTCPServer(SocketServer.TCPServer):
         # Suppress spurious errors raised when we spider the site
         # and prematurely abort requests, etc.
         tb = traceback.format_exc()
-        if 'An existing connection was forcibly closed' in tb:
-            return
+        spurious_errors = [
+            'An established connection was aborted',
+            'An existing connection was forcibly closed',
+        ]
+        for error in spurious_errors:
+            if error in tb:
+                return
         SocketServer.TCPServer.handle_error(self, request, client_address)
 
 
