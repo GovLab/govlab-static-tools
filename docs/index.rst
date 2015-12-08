@@ -31,7 +31,7 @@ following ``build.py`` file in its root directory:
 
 Running ``python build.py --help`` will output:
 
-.. literalinclude:: ../example/usage.txt
+.. program-output:: python ../example/build.py --help
 
 For a more detailed example, see the source for the `GovLab website`_.
 

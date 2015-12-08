@@ -1,4 +1,2 @@
-colorama
-staticjinja
-argh
+sphinxcontrib-programoutput
 nose
