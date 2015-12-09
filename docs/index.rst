@@ -32,6 +32,10 @@ Installation can be done via `pip`_:
 
    $ pip install govlab-static-tools
 
+You'll also want to install `Ruby SASS`_ (libsass is not currently
+supported). To verify this, try running ``sass --version`` at the
+command-line.
+
 Example
 -------
 
@@ -92,5 +96,6 @@ Indices and tables
 .. _staticjinja: http://staticjinja.readthedocs.org/
 .. _Jinja2: http://jinja.pocoo.org/
 .. _SASS: http://sass-lang.com/
+.. _Ruby SASS: http://sass-lang.com/install
 .. _pylinkchecker: https://github.com/mtlevolio/pylinkchecker
 .. _pip: https://pip.pypa.io/en/stable/
