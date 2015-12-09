@@ -21,6 +21,17 @@ the functionality of existing third-party libraries for core
 functionality when possible. It's also intended to provide
 testing tools out-of-the-box.
 
+Installation
+------------
+
+govlab-static-tools supports Python 2.7.
+
+Installation can be done via `pip`_:
+
+.. code-block:: bash
+
+   $ pip install govlab-static-tools
+
 Example
 -------
 
@@ -82,3 +93,4 @@ Indices and tables
 .. _Jinja2: http://jinja.pocoo.org/
 .. _SASS: http://sass-lang.com/
 .. _pylinkchecker: https://github.com/mtlevolio/pylinkchecker
+.. _pip: https://pip.pypa.io/en/stable/
