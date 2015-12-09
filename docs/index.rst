@@ -35,6 +35,18 @@ Running ``python build.py --help`` will output:
 
 For a more detailed example, see the source for the `GovLab website`_.
 
+Enabling Link Checking
+----------------------
+
+Running ``python build.py test`` will only work if you have the
+`pylinkchecker`_ package installed. Unfortunately, at the time of this
+writing, the package is not available on PyPi, and must be installed via
+git with:
+
+.. code-block:: bash
+
+   $ pip install git+git://github.com/mtlevolio/pylinkchecker.git#egg=pylinkchecker
+
 Developer API
 -------------
 
@@ -69,3 +81,4 @@ Indices and tables
 .. _staticjinja: http://staticjinja.readthedocs.org/
 .. _Jinja2: http://jinja.pocoo.org/
 .. _SASS: http://sass-lang.com/
+.. _pylinkchecker: https://github.com/mtlevolio/pylinkchecker
