@@ -137,7 +137,9 @@ class BuiltinCommands(ManagerCommands):
         self.manager.site.render()
         print "Done."
 
-    def test(self):
+    @argh.arg('--skip-build', help='Skip building the site',
+              action='store_true')
+    def test(self, skip_build=False):
         '''
         Run test suite.
 
@@ -145,7 +147,7 @@ class BuiltinCommands(ManagerCommands):
         '''
 
         print "Running smoke test."
-        self.build()
+        if not skip_build: self.build()
         print "Checking links."
         if not testing.linkcheck_site(root_dir=self.manager.site.outpath):
             print "Errors found while checking links, aborting."
